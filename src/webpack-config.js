@@ -103,12 +103,14 @@ function getRules(webpackConfig, dev) {
  */
 function getEntries(webpackConfig, files) {
   const entries = webpackConfig.entry;
-  entries['metal/render.js'] = path.join(__dirname, '../render.js');
+  entries['metal/render.js'] = [
+    'babel-polyfill', path.join(__dirname, '../render.js'),
+  ];
 
   files.forEach(file => {
     const entryName = path.join('metal', file);
     if (!entries[entryName]) {
-      entries[entryName] = file;
+      entries[entryName] = ['babel-polyfill', file];
     }
   });
   return entries;
